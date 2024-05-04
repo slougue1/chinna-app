@@ -34,6 +34,9 @@ jobs:
       #     SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       #   run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=java-tomcat-app -Dsonar.projectName='java-tomcat-app'
 
+      - name: Build with Maven
+        run: mvn package
+
       - name: Archive Maven Artifacts
         id: upload
         uses: actions/upload-artifact@v4.3.3
