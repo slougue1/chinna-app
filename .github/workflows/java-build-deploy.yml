@@ -1,9 +1,9 @@
 name: Java Build Analyse and Deploy
 on:
   push:
-    branches: [class20]
+    branches: [class-20]
   pull_request:
-    branches: [class20]
+    branches: [class-20]
 jobs:
   Build-Analyse-and-Deploy:
     name: Java Build Analyse and Deploy
