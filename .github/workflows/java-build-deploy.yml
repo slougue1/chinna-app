@@ -1,0 +1,25 @@
+name: Java Build Analyse and Deploy
+on:
+  push:
+    branches: [class20]
+  pull_request:
+    branches: [class20]
+jobs:
+  Build-Analyse-and-Deploy:
+    name: Java Build Analyse and Deploy
+    runs-on: ubuntu-latest
+    permissions: read-all
+
+
+    steps:
+      - name: Check out Code
+        uses: actions/checkout@v4.1.7
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4.2.2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+          
+  
