@@ -43,11 +43,11 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=maven-project -Dsonar.projectName='maven-project'
 
-      - name: Archive Maven Artifacts
-        uses: actions/upload-artifact@v4.3.6
-        with:
-          name: maven-artifacts
-          path: '**/target/*.war'
+      # - name: Archive Maven Artifacts
+      #   uses: actions/upload-artifact@v4.3.6
+      #   with:
+      #     name: maven-artifacts
+      #     path: '**/target/*.war'
 
       - name: Download Copy and Deploy
         uses: appleboy/ssh-action@v1.0.3
@@ -57,7 +57,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           script: |
             cd /home/ubuntu
-            wget "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts"
+            wget "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/1804517799"
             tar -xzvf maven-artifacts.tar.gz
           
           
