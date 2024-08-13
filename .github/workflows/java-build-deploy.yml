@@ -48,6 +48,17 @@ jobs:
         with:
           name: maven-artifacts
           path: '**/target/*.war'
+
+      - name: Download Copy and Deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/user
+            wget "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts"
+            tar -xzvf maven-artifacts.tar.gz
           
           
           
