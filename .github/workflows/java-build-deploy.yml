@@ -7,7 +7,7 @@ on:
 jobs:
   Build-Analyse-and-Deploy:
     name: Java Build Analyse and Deploy
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions: read-all
 
 
