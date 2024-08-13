@@ -42,7 +42,12 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=maven-project -Dsonar.projectName='maven-project'
-        
+
+      - name: Archive Maven Artifacts
+        uses: actions/upload-artifact@v4.3.6
+        with:
+          name: maven-artifacts
+          path: '**/target/*.war'
         
           
           
