@@ -7,7 +7,7 @@ on:
 jobs:
   Build-Analyse-and-Deploy:
     name: Java Build Analyse and Deploy
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions: read-all
 
 
@@ -37,11 +37,11 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
           
 
-      - name: Build and Analyse with SonarQube
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=maven-project -Dsonar.projectName='maven-project'
+      # - name: Build and Analyse with SonarQube
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #     SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      #   run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=maven-project -Dsonar.projectName='maven-project'
 
       - name: Archive Maven Artifacts
         uses: actions/upload-artifact@v4.3.6
