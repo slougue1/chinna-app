@@ -60,6 +60,7 @@
 #             wget "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/1804517799"
 #             tar -xzvf maven-artifacts.tar.gz
 
+
 name: Java Build Analyse and Deploy
 
 on:
