@@ -104,8 +104,8 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-          script: |
-            scp ubuntu@13.40.149.25:/home/ubuntu/actions-runner/_work/chinna-app/chinna-app/target/hiring.war ubuntu@18.170.219.43:/home/ubuntu/
+          source: "ubuntu@13.40.149.25:/home/ubuntu/actions-runner/_work/chinna-app/chinna-app/target/hiring.war"
+          target: "ubuntu@18.170.219.43:/home/ubuntu/"
 
           
   
