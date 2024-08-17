@@ -1,54 +1,109 @@
+# name: Java Build Analyse and Deploy
+# on:
+#   push:
+#     branches: [class-20]
+#   pull_request:
+#     branches: [class-20]
+# jobs:
+#   Build-Analyse-and-Deploy:
+#     name: Java Build Analyse and Deploy
+#     runs-on: self-hosted
+#     permissions: read-all
+
+
+#     steps:
+#       - name: Check out Code
+#         uses: actions/checkout@v4.1.7
+
+#       - name: Set up JDK
+#         uses: actions/setup-java@v4.2.2
+#         with:
+#           java-version: '17'
+#           distribution: 'temurin'
+#           cache: maven
+
+#       - name: Cache SonarQube Packages
+#         uses: actions/cache@v4.0.2
+#         with:
+#           path: ~/.sonar/cache
+#           key: ${{ runner.os }}-sonar
+#           restore-keys: ${{ runner.os }}-sonar
+
+#       - name: Cache Maven packages
+#         uses: actions/cache@v4.0.2
+#         with:
+#           path:  ~/.m2
+#           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#           restore-keys: ${{ runner.os }}-m2
+          
+
+#       # - name: Build and Analyse with SonarQube
+#       #   env:
+#       #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#       #     SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+#       #   run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=maven-project -Dsonar.projectName='maven-project'
+
+#       - name: Archive Maven Artifacts
+#         uses: actions/upload-artifact@v4.3.6
+#         with:
+#           name: maven-artifacts
+#           path: '**/target/*.war'
+
+#       - name: Download Copy and Deploy
+#         uses: appleboy/ssh-action@v1.0.3
+#         with:
+#           host: ${{ secrets.EC2_HOST }}
+#           username: ${{ secrets.EC2_USERNAME }}
+#           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+#           script: |
+#             cd /home/ubuntu
+#             wget "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/1804517799"
+#             tar -xzvf maven-artifacts.tar.gz
+
 name: Java Build Analyse and Deploy
+
 on:
   push:
     branches: [class-20]
   pull_request:
     branches: [class-20]
+
 jobs:
   Build-Analyse-and-Deploy:
     name: Java Build Analyse and Deploy
     runs-on: self-hosted
     permissions: read-all
-
-
     steps:
       - name: Check out Code
         uses: actions/checkout@v4.1.7
-
       - name: Set up JDK
         uses: actions/setup-java@v4.2.2
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-
       - name: Cache SonarQube Packages
         uses: actions/cache@v4.0.2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
-
       - name: Cache Maven packages
         uses: actions/cache@v4.0.2
         with:
           path:  ~/.m2
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-          
-
-      # - name: Build and Analyse with SonarQube
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      #     SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      #   run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=maven-project -Dsonar.projectName='maven-project'
-
+      - name: Build and Analyse with SonarQube
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=maven-project -Dsonar.projectName='maven-project'
       - name: Archive Maven Artifacts
         uses: actions/upload-artifact@v4.3.6
         with:
           name: maven-artifacts
           path: '**/target/*.war'
-
       - name: Download Copy and Deploy
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -59,7 +114,6 @@ jobs:
             cd /home/ubuntu
             wget "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/1804517799"
             tar -xzvf maven-artifacts.tar.gz
-          
           
           
   
