@@ -61,11 +61,7 @@
 #             tar -xzvf maven-artifacts.tar.gz
 name: Build
 
-on:
-  push:
-    branches:
-      - class20
-
+on: push
 
 jobs:
   build:
