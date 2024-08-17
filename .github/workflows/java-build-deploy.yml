@@ -104,6 +104,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-          source: "/home/ubuntu/actions-runner/_work/chinna-app/chinna-app/target/hiring.war"
-          target: "tomcat-server:/bitnami/tomcat/webapps"
-  
+          # source: "/home/ubuntu/actions-runner/_work/chinna-app/chinna-app/target/hiring.war"
+          # target: "tomcat-server:/bitnami/tomcat/webapps"
+          script: |
+            cp /home/ubuntu/actions-runner/_work/chinna-app/chinna-app/target/hiring.war tomcat-server:/bitnami/tomcat/webapps
