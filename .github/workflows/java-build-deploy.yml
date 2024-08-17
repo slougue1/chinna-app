@@ -65,6 +65,8 @@ on:
   push:
     branches:
       - class20
+
+
 jobs:
   build:
     name: Build and analyze
@@ -95,7 +97,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=java-tomcat-app -Dsonar.projectName='java-tomcat-app'
-     
       - name: Archive Maven Artifacts
         uses: actions/upload-artifact@v4.3.6
         with:
@@ -109,7 +110,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           script: |
             cd /home/ubuntu
-            wget "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/1804517799"
+            curl -L -O "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/"
             tar -xzvf maven-artifacts.tar.gz
           
           
