@@ -105,9 +105,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           script: |
-            cd /home/ubuntu
-            curl -L -O "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/"
-            tar -xzvf maven-artifacts.tar.gz
-          
+            scp ubuntu@13.40.149.25:/home/ubuntu/actions-runner/_work/chinna-app/chinna-app/target/hiring.war ubuntu@18.170.219.43:/home/ubuntu/
+
           
   
