@@ -60,46 +60,44 @@
 #             wget "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/1804517799"
 #             tar -xzvf maven-artifacts.tar.gz
 
-
-name: Java Build Analyse and Deploy
+name: Build
 
 on:
   push:
-    branches: [class-20]
-  pull_request:
-    branches: [class-20]
+    branches:
+      - class20
+
 
 jobs:
-  Build-Analyse-and-Deploy:
-    name: Java Build Analyse and Deploy
-    runs-on: self-hosted
-    permissions: read-all
+  build:
+    name: Build and analyze
+    runs-on: ubuntu-latest
+    
     steps:
-      - name: Check out Code
-        uses: actions/checkout@v4.1.7
-      - name: Set up JDK
-        uses: actions/setup-java@v4.2.2
+      - uses: actions/checkout@v4
         with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: maven
-      - name: Cache SonarQube Packages
-        uses: actions/cache@v4.0.2
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+      - name: Cache SonarQube packages
+        uses: actions/cache@v1
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache Maven packages
-        uses: actions/cache@v4.0.2
+        uses: actions/cache@v1
         with:
-          path:  ~/.m2
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: Build and Analyse with SonarQube
+      - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=maven-project -Dsonar.projectName='maven-project'
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=java-tomcat-app -Dsonar.projectName='java-tomcat-app'
       - name: Archive Maven Artifacts
         uses: actions/upload-artifact@v4.3.6
         with:
