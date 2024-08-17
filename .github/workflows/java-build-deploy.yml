@@ -107,4 +107,4 @@ jobs:
           # source: "/home/ubuntu/actions-runner/_work/chinna-app/chinna-app/target/hiring.war"
           # target: "tomcat-server:/bitnami/tomcat/webapps"
           script: |
-            cp /home/ubuntu/actions-runner/_work/chinna-app/chinna-app/target/hiring.war tomcat-server:/bitnami/tomcat/webapps
+            docker cp /home/ubuntu/actions-runner/_work/chinna-app/chinna-app/target/hiring.war tomcat-server:/bitnami/tomcat/webapps
