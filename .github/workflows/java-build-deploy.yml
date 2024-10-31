@@ -47,4 +47,4 @@ jobs:
             docker cp /home/ubuntu/actions-runner/_work/chinna-app/chinna-app/target/hiring.war tomcat-server:/bitnami/tomcat/webapps
 
 #NB - The runner should be the same as the tomcat server
-
+##
