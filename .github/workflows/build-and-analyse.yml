@@ -44,5 +44,5 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker cp /home/ubuntu/actions-runner/_work/chinna-app/chinna-app/target/hiring.war tomcat-server:/bitmani/tomcat/webapps
+            docker cp /home/ubuntu/actions-runner/_work/chinna-app/chinna-app/target/hiring.war tomcat-server:/bitnami/tomcat/webapps
           
